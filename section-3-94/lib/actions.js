@@ -1,6 +1,7 @@
 'use server';
 
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
+
 import { saveMeal } from './meals';
 import { revalidatePath } from 'next/cache';
 
@@ -17,6 +18,7 @@ export async function shareMeal(prevState, formData) {
     creator: formData.get('name'),
     creator_email: formData.get('email'),
   };
+
   if (
     isInvalidText(meal.title) ||
     isInvalidText(meal.summary) ||
@@ -28,9 +30,10 @@ export async function shareMeal(prevState, formData) {
     meal.image.size === 0
   ) {
     return {
-      message: 'Invalid input',
+      message: 'Invalid input.',
     };
   }
+
   await saveMeal(meal);
   revalidatePath('/meals');
   redirect('/meals');

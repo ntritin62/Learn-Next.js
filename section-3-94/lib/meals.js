@@ -47,5 +47,4 @@ export async function saveMeal(meal) {
     )
   `
   ).run(meal);
-  redirect('/meals');
 }
